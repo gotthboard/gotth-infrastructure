@@ -1,7 +1,7 @@
 schema_version = 1
 project = "gotth-infrastructure"
 profile = "strict"
-active = "extraction"
+active = "reusable-v0-admission"
 
 [settings]
 worktree_root = "worktrees"
@@ -55,6 +55,68 @@ kind = "unit"
 command = "make verify"
 required = true
 timeout_seconds = 600
+side_effect = "local_write"
+network = false
+retries = 0
+
+[feature.reusable-v0-admission]
+id = "reusable-v0-admission"
+slug = "reusable-v0-admission"
+name = "Admit the reusable infrastructure contract"
+namespace = "ops"
+parent = ""
+state = "in_progress"
+risk = "critical"
+assurance = "traceable-tests"
+created_at = "2026-09-03T01:33:31Z"
+activated_at = "2026-09-03T01:33:31Z"
+updated_at = "2026-09-03T01:33:31Z"
+completed_at = ""
+folder = "workflow/features/reusable-v0-admission"
+worktree = "."
+branch = "feature/reusable-v0-admission"
+scope = ["Render actual file-backed Compose secrets", "Compare declared and effective image, identity, port, tmpfs, and mounts", "Bound and strictly decode CLI inputs", "Record Compose and disposable-runtime evidence"]
+non_goals = ["Deploy or mutate an existing service", "Create, read, copy, chmod, or rotate secrets", "Model databases, persistent storage, health checks, networks, or restart policy", "Tag before a real consumer pin"]
+affected_files = ["README.md", "*.go", "cmd/**", "docs/**", "examples/gotth-bb/service.json", "Makefile", "workflow.toml", "workflow/features/reusable-v0-admission/**", "workflow/artifacts/global-coverage-map.md"]
+invariants = ["No library or CLI operation invokes Docker or mutates a host", "Secret content and resolved source paths are never read or emitted", "Effective runtime must match the declared service exactly", "Operator owns every external mutation"]
+acceptance = ["Rendered YAML uses Compose secrets and contains no secret volume", "Missing, writable, wrong-target, wrong-type, and undeclared mounts fail closed", "Strict CLI, race-repeated, Compose parser, disposable runtime, clean-clone, and graph gates pass"]
+
+[[feature.reusable-v0-admission.dependency]]
+id = "extraction"
+type = "prerequisite"
+state = "satisfied"
+evidence = "workflow/features/extraction/evidence/verification.md"
+satisfied_at = "2026-09-03T01:33:31Z"
+source_commit = "f5247a4a51be365b7e30a61ccb9376a0cd249577"
+
+[feature.reusable-v0-admission.rollback]
+strategy = "revert_feature_commit"
+notes = "No tag or consumer pin exists; revert the admission commits"
+data_loss_risk = false
+requires_migration_down = false
+
+[[feature.reusable-v0-admission.interface]]
+name = "Go library and CLI"
+kind = "api"
+stability = "unstable-unreleased"
+change = "breaking"
+
+[[feature.reusable-v0-admission.verification]]
+id = "verify"
+kind = "unit"
+command = "make verify"
+required = true
+timeout_seconds = 600
+side_effect = "local_write"
+network = false
+retries = 0
+
+[[feature.reusable-v0-admission.verification]]
+id = "compose"
+kind = "integration"
+command = "make verify-compose"
+required = true
+timeout_seconds = 120
 side_effect = "local_write"
 network = false
 retries = 0
