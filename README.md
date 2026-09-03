@@ -1,6 +1,6 @@
-# gotth-ops
+# gotth-infrastructure
 
-`gotth-ops` is a deployment-contract library and inspection tool for small
+`gotth-infrastructure` is a deployment-contract library and inspection tool for small
 containerized services. It renders digest-pinned, nonroot, read-only,
 capability-free, no-new-privileges, loopback-only Compose configuration and
 verifies the effective runtime boundary from Docker-compatible inspect JSON.

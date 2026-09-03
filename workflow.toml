@@ -1,5 +1,5 @@
 schema_version = 1
-project = "gotth-ops"
+project = "gotth-infrastructure"
 profile = "strict"
 active = "extraction"
 
