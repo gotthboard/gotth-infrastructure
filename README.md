@@ -25,7 +25,8 @@ deployment, or arbitrary volume mounts. Consumers own those decisions.
 
 ## Installation, compatibility, and support
 
-Unreleased. The API and CLI are pre-1.0 and may change until the first tagged compatibility contract.
+Unreleased. The API and CLI are pre-1.0 and may change until the first
+tagged compatibility contract.
 
 No post-migration version has been tagged. To inspect the current source
 before the first admitted release:
