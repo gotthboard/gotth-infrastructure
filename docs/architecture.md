@@ -1,5 +1,8 @@
 # Architecture
 
+The canonical public implementation lives in `pkg/ops`; the module root
+contains no Go package and the CLI imports `pkg/ops` directly.
+
 One strict JSON service model renders a deterministic Compose application
 service. Each declared secret names an environment variable containing its
 source-file path and an exact target under `/run/secrets`; rendering uses the

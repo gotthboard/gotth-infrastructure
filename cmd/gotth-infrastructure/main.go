@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/gotthboard/gotth-infrastructure"
+	"github.com/gotthboard/gotth-infrastructure/pkg/ops"
 )
 
 const maxInputBytes = 1 << 20

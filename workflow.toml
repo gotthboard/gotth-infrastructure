@@ -1,7 +1,7 @@
 schema_version = 1
 project = "gotth-infrastructure"
 profile = "strict"
-active = "github-distribution"
+active = "alpha3-library-admission"
 
 [settings]
 worktree_root = "worktrees"
@@ -191,4 +191,50 @@ required = true
 timeout_seconds = 300
 side_effect = "external_read"
 network = true
+retries = 0
+
+[feature.alpha3-library-admission]
+id = "alpha3-library-admission"
+slug = "alpha3-library-admission"
+name = "Formally admit the structured alpha.3 library"
+namespace = "ops"
+parent = ""
+state = "in_progress"
+risk = "critical"
+assurance = "traceable-tests"
+created_at = "2026-09-03T06:04:51Z"
+activated_at = "2026-09-03T06:04:51Z"
+updated_at = "2026-09-03T06:04:51Z"
+folder = "workflow/features/alpha3-library-admission"
+source_path = "pkg/ops"
+worktree = "/tmp/gotth-infrastructure-coding-setup"
+branch = "feature/openclaw-coding-setup-admission"
+scope = ["Single canonical public-package layout", "CLI canonical import", "Governance-only module root", "Coding-setup traceability, runtime, performance, review, and evidence"]
+non_goals = ["Deploy, invoke Docker from library or CLI, read secrets, or mutate a host", "Tag before consumer admission"]
+affected_files = ["*.go", "pkg/ops/**", "cmd/**", "README.md", "docs/**", "workflow.toml", "workflow/**"]
+invariants = ["The public mechanism remains render and inspect only", "No secret value or resolved source path is emitted", "Effective runtime checks remain exact"]
+acceptance = ["Canonical consumer, Compose, disposable runtime, format, vet, race, clean-clone, graph, and two independent Judge gates pass"]
+
+[[feature.alpha3-library-admission.dependency]]
+id = "github-distribution"
+type = "prerequisite"
+state = "satisfied"
+evidence = "workflow/features/github-distribution/evidence/verification.md"
+source_commit = "5cec87847838d053f336d001ae3b04808a135dc3"
+satisfied_at = "2026-09-03T06:30:00Z"
+
+[feature.alpha3-library-admission.rollback]
+strategy = "revert_admission_commit"
+notes = "No tag or consumer pin exists; revert the structural admission commit"
+data_loss_risk = false
+requires_migration_down = false
+
+[[feature.alpha3-library-admission.verification]]
+id = "verify"
+kind = "unit-integration"
+command = "make verify plus disposable Docker runtime inspection"
+required = true
+timeout_seconds = 1200
+side_effect = "local_write"
+network = false
 retries = 0

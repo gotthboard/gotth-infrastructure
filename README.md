@@ -12,6 +12,18 @@ actual file-backed Compose secrets. It verifies the declared service against
 effective Docker-compatible inspect JSON, including the image, identity,
 published port, temporary filesystem, and read-only secret mounts.
 
+Canonical Go package:
+`github.com/gotthboard/gotth-infrastructure/pkg/ops`. The module root
+contains repository governance only; the CLI imports the canonical package.
+
+Repository layout:
+
+- `pkg/ops/` — public desired-state and inspection implementation;
+- `cmd/gotth-infrastructure/` — bounded render/verify CLI;
+- module root — module metadata and repository governance;
+- `examples/`, `docs/`, and `workflow/` — provenance, contracts, and canonical
+  workflow state.
+
 It does not deploy, restart, recreate, restore, or mutate a host. Generated
 configuration is desired state; runtime inspection is the evidence.
 

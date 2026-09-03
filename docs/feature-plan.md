@@ -10,3 +10,6 @@
    secrets and exact effective mount verification.
 7. Admit the generic one-container contract only after Compose parser and
    disposable Docker runtime evidence agree with unit fixtures.
+8. Complete alpha.3 coding-setup admission: canonical package layout,
+   requirement/runtime/performance records, clean clone, and two clean Judge
+   passes.

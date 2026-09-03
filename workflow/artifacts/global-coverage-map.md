@@ -8,3 +8,6 @@
 | Operator command boundary | `cmd/gotth-infrastructure/main_test.go` |
 | External consumer API | `public_api_test.go` |
 | Alpha.2 provenance | `examples/gotth-bb/` |
+
+Implementation tests above now live under `pkg/ops/`; the root
+`public_api_test.go` and CLI import that canonical package.

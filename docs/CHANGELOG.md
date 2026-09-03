@@ -6,9 +6,35 @@ Released sections use Semantic Versioning; unreleased work remains under
 
 ## Unreleased
 
-### 2026-09-03 00:42 CDT — Establish GitHub public distribution
+### 2026-09-03 01:04 CDT — Structure and formally admit the alpha.3 library
 
 Commit: current commit; hash assigned by Git after commit
+
+Affected files:
+
+- `pkg/ops/`
+- canonical API test and CLI imports
+- `README.md`, `docs/`, `workflow.toml`, and admission evidence
+
+Explanation:
+
+Move the containment implementation and tests out of the repository root,
+point the CLI at the canonical public package, leave the root for governance,
+and add formal coding-setup admission records.
+
+Verification:
+
+- preliminary `go test ./...` passed after the move
+- final race, Compose, runtime, clean-clone, graph, and Judge evidence is in the
+  admission workflow evidence
+
+Risks / non-goals:
+
+- no deployment, Docker invocation by library/CLI, secret read, or host change
+
+### 2026-09-03 00:42 CDT — Establish GitHub public distribution
+
+Commit: `4b69d81`
 
 Affected files:
 

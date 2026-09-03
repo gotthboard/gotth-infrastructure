@@ -1,5 +1,10 @@
 # Implementation specification
 
+- Canonical package:
+  `github.com/gotthboard/gotth-infrastructure/pkg/ops`.
+- The module root contains no Go package; the CLI depends only on the canonical
+  public package.
+
 - Images require an explicit lowercase SHA-256 digest.
 - UID and GID must both be positive.
 - Ports must be within 1..65535 and render on `127.0.0.1` only.
