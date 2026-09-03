@@ -6,7 +6,7 @@
   "host_port": 18080,
   "container_port": 8080,
   "secrets": [
-    {"name": "gotth-bb-database-url", "path": "/run/secrets/database-url"},
-    {"name": "gotth-bb-oidc-client-secret", "path": "/run/secrets/oidc-client-secret"}
+    {"name": "gotth-bb-database-url", "source_env": "GOTTH_BB_DATABASE_URL_FILE", "path": "/run/secrets/database-url"},
+    {"name": "gotth-bb-oidc-client-secret", "source_env": "GOTTH_BB_OIDC_CLIENT_SECRET_FILE", "path": "/run/secrets/oidc-client-secret"}
   ]
 }

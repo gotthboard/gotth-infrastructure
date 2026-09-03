@@ -9,14 +9,18 @@ import (
 )
 
 var (
-	slugPattern   = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
-	digestPattern = regexp.MustCompile(`^[a-z0-9./_-]+@sha256:[0-9a-f]{64}$`)
+	slugPattern        = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
+	environmentPattern = regexp.MustCompile(`^[A-Z][A-Z0-9_]{0,79}$`)
+	digestPattern      = regexp.MustCompile(`^[a-z0-9]+(?:[._:/-][a-z0-9]+)*@sha256:[0-9a-f]{64}$`)
 )
 
-// Secret is one externally managed, read-only file mount.
+// Secret is one externally managed file exposed through the Compose secrets
+// contract. SourceEnv names the environment variable containing the host file
+// path. Path is the exact read-only destination in the container.
 type Secret struct {
-	Name string `json:"name"`
-	Path string `json:"path"`
+	Name      string `json:"name"`
+	SourceEnv string `json:"source_env"`
+	Path      string `json:"path"`
 }
 
 // Service is a least-privilege runtime contract for one application container.
@@ -46,10 +50,12 @@ func (service Service) Validate() error {
 		return fmt.Errorf("service ports are invalid")
 	}
 	seenNames := make(map[string]struct{}, len(service.Secrets))
+	seenSources := make(map[string]struct{}, len(service.Secrets))
 	seenPaths := make(map[string]struct{}, len(service.Secrets))
 	for _, secret := range service.Secrets {
-		if len(secret.Name) > 80 || !slugPattern.MatchString(secret.Name) ||
-			!strings.HasPrefix(secret.Path, "/run/secrets/") || strings.Contains(secret.Path, "..") || strings.HasSuffix(secret.Path, "/") {
+		targetName := strings.TrimPrefix(secret.Path, "/run/secrets/")
+		if len(secret.Name) > 80 || !slugPattern.MatchString(secret.Name) || !environmentPattern.MatchString(secret.SourceEnv) ||
+			targetName == secret.Path || !slugPattern.MatchString(targetName) {
 			return fmt.Errorf("secret mount is invalid")
 		}
 		if _, exists := seenNames[secret.Name]; exists {
@@ -58,7 +64,11 @@ func (service Service) Validate() error {
 		if _, exists := seenPaths[secret.Path]; exists {
 			return fmt.Errorf("secret target is duplicated")
 		}
+		if _, exists := seenSources[secret.SourceEnv]; exists {
+			return fmt.Errorf("secret source environment variable is duplicated")
+		}
 		seenNames[secret.Name] = struct{}{}
+		seenSources[secret.SourceEnv] = struct{}{}
 		seenPaths[secret.Path] = struct{}{}
 	}
 	return nil
