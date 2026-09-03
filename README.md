@@ -1,5 +1,10 @@
 # gotth-infrastructure
 
+> **Distribution:** GitHub is the public clone, Go import, and future release endpoint.
+> Forgejo remains canonical development and the issue/contribution location.
+> See [the distribution contract](docs/distribution.md).
+
+
 `gotth-infrastructure` is a deployment-contract library and inspection tool for
 small containerized services. It renders digest-pinned, nonroot, read-only,
 capability-free, no-new-privileges, loopback-only Compose configuration with
@@ -17,3 +22,20 @@ The contract is deliberately narrow: one application container, one TCP port,
 one bounded `/tmp`, and zero or more externally supplied secret files. It does
 not model databases, networks, health checks, restart policy, orchestration,
 deployment, or arbitrary volume mounts. Consumers own those decisions.
+
+## Installation, compatibility, and support
+
+Unreleased. The API and CLI are pre-1.0 and may change until the first tagged compatibility contract.
+
+No post-migration version has been tagged. To inspect the current source
+before the first admitted release:
+
+```sh
+go get github.com/gotthboard/gotth-infrastructure@main
+go install github.com/gotthboard/gotth-infrastructure/cmd/gotth-infrastructure@main
+```
+
+The repository has no selected license and no long-term support promise.
+Versioning, release admission, security reporting, and contribution details are
+in [the release policy](docs/RELEASING.md), [security policy](SECURITY.md), and
+[contribution guide](CONTRIBUTING.md).

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	ops "git.dannyhunn.com/agents/gotth-infrastructure"
+	ops "github.com/gotthboard/gotth-infrastructure"
 )
 
 func TestPublicAPIIsUsableOutsidePackage(t *testing.T) {

@@ -1,3 +1,3 @@
-module git.dannyhunn.com/agents/gotth-infrastructure
+module github.com/gotthboard/gotth-infrastructure
 
 go 1.26.6
